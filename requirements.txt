@@ -1,0 +1,16 @@
+# Essenciais para notebooks e execução
+ipykernel
+jupyter
+ipython
+
+# Manipulação e análise de dados
+pandas
+numpy
+openpyxl
+
+# Validação e tratamento de strings
+thefuzz
+rapidfuzz
+
+# Outras utilidades
+matplotlib-inline
