@@ -66,6 +66,22 @@ def valida_data(data, nome_arquivo=""):
     
     return data
 
+def valida_moeda(moeda):
+
+    if type(moeda) == str:
+        moeda = moeda.replace(" ", "")
+        moeda = moeda.replace("R", "").replace("$","")
+        moeda = moeda.replace(",", ".").replace("..", ".")
+        moeda = moeda.replace("-", "0")
+        if len(moeda) > 4:
+            moeda = moeda[:5]
+
+        if moeda[-1] == ".":
+            moeda = moeda[:-1]
+        
+    return float(moeda)
+
+
 def monta_df(df, nome_mercado, data):
     
     lista_primeiro_key = ['arroz', 'posto']
@@ -96,5 +112,11 @@ def monta_df(df, nome_mercado, data):
             
             if 'xxx' in produto[0]:
                 continue
+            
+            produto[1] = valida_moeda(produto[1])
 
+            if produto[1] == 0:
+                continue
+            
+            
     return list_completo
