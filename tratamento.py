@@ -168,7 +168,6 @@ def corrigir_nome(nome, lista_nomes):
 def monta_df(df, nome_mercado, data):
     
     lista_primeiro_key = ['arroz', 'posto']
-    list_completo = []
     list_index = df.index.unique().tolist()
     if pd.isna(list_index[0]):
         list_index.pop(0)
@@ -177,10 +176,10 @@ def monta_df(df, nome_mercado, data):
         list_index.pop(0)
     
     colunas = df.columns
+    dados_completos = []
 
     for idx in list_index:
         for coluna in colunas:
-            #dados_produto = [nome_mercado, idx]
 
             produto = df.loc[idx, coluna].values
             
@@ -201,10 +200,17 @@ def monta_df(df, nome_mercado, data):
             if produto[1] == 0:
                 continue
             
-            # Correção dos nomes
-            nome_mercado = corrigir_nome(nome_mercado, nomes_mercados)
-            nome_produto = corrigir_nome(idx, nomes_produtos)
-            produto[0] = corrigir_nome(produto[0], nomes_marcas)
-            print(nome_mercado, nome_produto, produto)
+            if nome_mercado == 'COMBUSTÍVEL':
+                nome_posto = corrigir_nome(idx.replace("2", "II"), nomes_postos_combustiveis)
+                dados_produto = [nome_posto, produto[0], produto[1], data]
+                dados_completos.append(dados_produto)
+            else:
+                # Correção dos nomes
+                nome_mercado = corrigir_nome(nome_mercado, nomes_mercados)
+                nome_produto = corrigir_nome(idx, nomes_produtos)
+                produto[0] = corrigir_nome(produto[0], nomes_marcas)
+                
+                dados_produto = [nome_mercado, nome_produto, produto[0], produto[1], data]
+                dados_completos.append(dados_produto)
 
-    return list_completo
+    return dados_completos
