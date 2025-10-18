@@ -180,7 +180,7 @@ def monta_df(df, nome_mercado, data):
 
     for idx in list_index:
         for coluna in colunas:
-            dados_produto = [nome_mercado, idx]
+            #dados_produto = [nome_mercado, idx]
 
             produto = df.loc[idx, coluna].values
             
@@ -201,7 +201,10 @@ def monta_df(df, nome_mercado, data):
             if produto[1] == 0:
                 continue
             
-            
-            print(produto)
+            # Correção dos nomes
+            nome_mercado = corrigir_nome(nome_mercado, nomes_mercados)
+            nome_produto = corrigir_nome(idx, nomes_produtos)
+            produto[0] = corrigir_nome(produto[0], nomes_marcas)
+            print(nome_mercado, nome_produto, produto)
 
     return list_completo
